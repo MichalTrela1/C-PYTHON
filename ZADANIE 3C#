@@ -1,0 +1,41 @@
+using System;
+
+namespace zadanie3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Podaj liczbę ocen: ");
+            int liczbaOcen = Convert.ToInt32(Console.ReadLine());
+
+                double suma = 0;
+
+            for (int i = 0; i < liczbaOcen; i++)
+            {
+                Console.Write($"Podaj ocenę {i + 1} od 1 do 6 : ");
+                double ocena = Convert.ToDouble(Console.ReadLine());
+                    suma += ocena;
+            }
+
+            if (liczbaOcen > 0)
+            {
+                double srednia = suma / liczbaOcen;
+                    Console.WriteLine($"Średnia: {srednia:F2}");
+
+                if (srednia >= 3.0)
+                {
+                    Console.WriteLine("Uczen zdal ");
+                }
+                else
+                {
+                    Console.WriteLine("Uczen nie zdal ");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Niepoprawne dane, nie mozna obliczyc sredniej");
+            }
+        }
+    }
+}
