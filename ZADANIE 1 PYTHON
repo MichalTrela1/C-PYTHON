@@ -1,0 +1,18 @@
+liczba1 = float(input("Podaj pierwsza liczbe: "))
+
+liczba2 = float(input("Podaj druga liczbe: "))
+
+dzialanie = input("Wybierz, ktore działanie chcesz wykonac? ( +, -, *, / )??? : ")
+
+wynik = 0
+
+if dzialanie == "+":
+    wynik = liczba1 + liczba2
+elif dzialanie == "-":
+    wynik = liczba1 - liczba2
+elif dzialanie == "*":
+    wynik = liczba1 * liczba2
+elif dzialanie == "/":
+    wynik = liczba1 / liczba2
+
+print("Wynik to : ", wynik)
