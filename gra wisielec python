@@ -1,0 +1,71 @@
+import random
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+
+class WordBank:
+    def __init__(self):
+        self.words = ["PROGRAMOWANIE", "PYTHON", "STUDIA"]
+
+    def get_random_word(self):
+        return random.choice(self.words)
+
+class Game:
+    def __init__(self, player, word):
+        self.player = player
+        self.word = word
+        self.guessed_letters = []
+        self.mistakes = 0
+        self.max_mistakes = 7
+
+    def play(self):
+        print(f"\nWitamy w grze, {self.player.name}!")
+
+        while self.mistakes < self.max_mistakes:
+            display_word = ""
+            won = True
+
+            for letter in self.word:
+                if letter in self.guessed_letters:
+                    display_word += letter + " "
+                else:
+                    display_word += "_ "
+                    won = False 
+            
+            print(f"\nHasło: {display_word}")
+            print(f"Błędy: {self.mistakes} / {self.max_mistakes}")
+
+            if won == True:
+                print("Gratulacje, wygrałeś!!! ")
+                return 
+
+            guess = input("Podaj literę: ").upper()
+
+            if guess in self.guessed_letters:
+                
+                print("Podałeś już tę literę")
+                
+            elif guess in self.word:
+                
+                print("Odgadłeś literę! ")
+                self.guessed_letters.append(guess)
+                
+            else:
+                
+                print("Nie ma takiej litery")
+                self.guessed_letters.append(guess)
+                self.mistakes += 1
+
+        print(f"\nNiestety, prawidlowe hasło to: {self.word}")
+
+podane_imie = input("Podaj swoje imię: ")
+player1 = Player(podane_imie)
+
+bank = WordBank()
+random_word = bank.get_random_word()
+
+wisielec = Game(player1, random_word)
+wisielec.play()
+
+print("\nKoniec.")
