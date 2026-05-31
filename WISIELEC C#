@@ -1,0 +1,118 @@
+using System;
+using System.Collections.Generic;
+
+namespace GraWisielec
+{
+    class Player
+    {
+        public string Name { get; set; }
+
+        public Player(string name)
+        {
+            Name = name;
+        }
+    }
+
+    class WordBank
+    {
+        public string[] words = { "PROGRAMOWANIE", "PYTHON", "STUDIA" };
+
+        public string GetRandomWord()
+        {
+            Random rnd = new Random();
+            int index = rnd.Next(words.Length);
+            return words[index];
+        }
+    }
+
+    class Game
+    {
+        public Player Player { get; set; }
+        public string Word { get; set; }
+        public List<string> GuessedLetters { get; set; }
+        public int Mistakes { get; set; }
+        public int MaxMistakes { get; set; }
+
+        public Game(Player player, string word)
+        {
+            Player = player;
+            Word = word;
+            GuessedLetters = new List<string>();
+            Mistakes = 0;
+            MaxMistakes = 7;
+        }
+
+        public void Play()
+        {
+            Console.WriteLine($"\nWitamy w grze, {Player.Name}!");
+
+            while (Mistakes < MaxMistakes)
+            {
+                string displayWord = "";
+                bool won = true;
+
+                for (int i = 0; i < Word.Length; i++)
+                {
+                    string letter = Word[i].ToString();
+
+                    if (GuessedLetters.Contains(letter))
+                    {
+                        displayWord += letter + " ";
+                    }
+                    else
+                    {
+                        displayWord += "_ ";
+                        won = false; 
+                    }
+                }
+
+                Console.WriteLine("\nHasło: " + displayWord);
+                Console.WriteLine($"Błędy: {Mistakes} / {MaxMistakes}");
+
+                if (won == true)
+                {
+                    Console.WriteLine("Gratulacje, wygrałes!!! ");
+                    return; 
+                }
+
+                Console.Write("Podaj literę: ");
+                string guess = Console.ReadLine().ToUpper();
+
+                if (GuessedLetters.Contains(guess))
+                {
+                    Console.WriteLine("Podałeś już tę literę");
+                }
+                else if (Word.Contains(guess))
+                {
+                    Console.WriteLine("Odgadłeś literę! ");
+                    GuessedLetters.Add(guess);
+                }
+                else
+                {
+                    Console.WriteLine("Nie ma takiej litery");
+                    GuessedLetters.Add(guess);
+                    Mistakes++;
+                }
+            }
+
+            Console.WriteLine($"\nNiestety, prawidlowe hasło to: {Word}");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Podaj swoje imię: ");
+                string podaneImie = Console.ReadLine();
+            
+            Player player1 = new Player(podaneImie);
+            
+            WordBank bank = new WordBank();
+                string randomWord = bank.GetRandomWord();
+
+            Game wisielec = new Game(player1, randomWord);
+                wisielec.Play();
+        }
+    }
+}
