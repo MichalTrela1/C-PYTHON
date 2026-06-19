@@ -1,0 +1,85 @@
+using System;
+
+namespace WypozyczalniaPojazdow
+{
+    abstract class Vehicle
+    {
+        public string Id { get; private set; } 
+            public string Name { get; set; }
+                public bool IsRented { get; private set; }
+
+        public Vehicle(string id, string name)
+        {
+            Id = id;
+            Name = name;
+            IsRented = false;
+        }
+
+        public void Rent()
+        {
+            IsRented = true;
+        }
+        
+        public abstract void ShowInfo();
+    }
+    
+    class Car : Vehicle
+    {
+        public Car(string id, string name) : base(id, name) { }
+
+        public override void ShowInfo()
+        {
+            Console.WriteLine($"To jest Samochód: {Name}");
+        }
+    }
+
+    class Bike : Vehicle
+    {
+        public Bike(string id, string name) : base(id, name) { }
+
+        public override void ShowInfo()
+        {
+            Console.WriteLine($"To jest rower: {Name}");
+        }
+    }
+    
+    class User
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        
+        public Vehicle RentedVehicle { get; private set; } 
+
+        public User(string id, string name)
+        {
+            UserId = id;
+            UserName = name;
+        }
+        
+        public void RentVehicle(Vehicle v)
+        {
+            RentedVehicle = v;
+            v.Rent();
+            Console.WriteLine($"{UserName} wypożyczył: {v.Name}");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            User player = new User("Uzytkownik 1", "Zbigniew");
+                Car myCar = new Car("C01", "Peugeot");
+            
+            Bike myBike = new Bike("B01", "cross");
+
+            myCar.ShowInfo();
+                myBike.ShowInfo();
+
+            
+                player.RentVehicle(myCar);
+            
+            Console.WriteLine($"Czy samochód jest zajęty? {myCar.IsRented}");
+        }
+    }
+}
